@@ -1,33 +1,21 @@
 using System.Collections.Generic;
 using System.Drawing;
-using System.Net;
 
 namespace Advent2019.Problems.Day18
 {
     public class PathNode
     {
-        public Point Location;
+        public Point Point;
         public int Steps;
-        public HashSet<char> Keys = new HashSet<char>();
-        public HashSet<Point> closedSet = new HashSet<Point>();
+        public float Heuristic;
+        public Key KeysRequired;
 
-        public PathNode(Point location, int steps)
+        public PathNode(Point point, int steps, float heuristic, Key keysRequired)
         {
-            this.Location = location;
-            this.Steps = steps;
-        }
-
-        public PathNode(Point location, int steps, HashSet<char> keys, HashSet<Point> closedSet)
-        {
-            this.Location = location;
-            this.Steps = steps;
-            char[] keysRaw = new char[keys.Count];
-            keys.CopyTo(keysRaw);
-            this.Keys = new HashSet<char>(keysRaw);
-
-            Point[] points = new Point[closedSet.Count];
-            closedSet.CopyTo(points);
-            this.closedSet = new HashSet<Point>(points);
+            Point = point;
+            Steps = steps;
+            Heuristic = heuristic;
+            KeysRequired = keysRequired;
         }
     }
 }
