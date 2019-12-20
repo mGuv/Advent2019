@@ -27,16 +27,7 @@ namespace Advent2019.Problems.Day5
             this.part2Output = rememberLastOutput;
             this.part2Input = inputFive;
         }
-
-        private int readValue(string[] memory, string address, char mode)
-        {
-            if (mode == '1')
-            {
-                return int.Parse(address);
-            }
-
-            return int.Parse(memory[int.Parse(address)]);
-        }
+        
         public Task RunPart1Async(CancellationToken cancellationToken)
         {
             Console.WriteLine("Please enter program instructions (comma separated):");
