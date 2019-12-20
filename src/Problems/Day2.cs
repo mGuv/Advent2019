@@ -14,10 +14,14 @@ namespace Advent2019.Problems
         public string Part2Title => "Gravity Assist around the Moon";
 
         private Computer computer;
+        private IInput computerInput;
+        private IOutput computerOutput;
 
-        public Day2(Computer computer)
+        public Day2(Computer computer, DummyInput dummyInput, DummyOutput dummyOutput)
         {
             this.computer = computer;
+            this.computerInput = dummyInput;
+            this.computerOutput = dummyOutput;
         }
         public Task RunPart1Async(CancellationToken cancellationToken)
         {
@@ -30,7 +34,7 @@ namespace Advent2019.Problems
                 {2, 2}
             };
             
-            Memory memory = this.computer.Run(input);
+            Memory memory = this.computer.Run(input, this.computerInput, this.computerOutput, overrides);
             
             Console.WriteLine(memory.GetAtAddress(0));
             
@@ -54,7 +58,7 @@ namespace Advent2019.Problems
                         {2, verb}
                     };
                     
-                    Memory memory = this.computer.Run(input, overrides);
+                    Memory memory = this.computer.Run(input, this.computerInput, this.computerOutput, overrides);
 
                     if (memory.GetAtAddress(0) == 19690720)
                     {
