@@ -131,7 +131,7 @@ namespace Advent2019.Problems.Day7
 
             foreach (int[] sequence in this.generatePhaseSequences2())
             {
-                // Reset output between sequences
+                // Wire each amp together with blocking input/output pairs
                 ReadWriteBlocker EtoA = new ReadWriteBlocker();
                 await EtoA.WriteAsync(sequence[0]);
                 await EtoA.WriteAsync(0);
@@ -144,13 +144,12 @@ namespace Advent2019.Problems.Day7
                 ReadWriteBlocker DtoE = new ReadWriteBlocker();
                 await DtoE.WriteAsync(sequence[4]);
 
-                // run five copies...
+                // run five copies async until they all finish
                 Task ampA = this.computer.RunAsync(this.getRawProgramInstructions(), EtoA, AtoB);
                 Task ampB = this.computer.RunAsync(this.getRawProgramInstructions(), AtoB, BtoC);
                 Task ampC = this.computer.RunAsync(this.getRawProgramInstructions(), BtoC, CtoD);
                 Task ampD = this.computer.RunAsync(this.getRawProgramInstructions(), CtoD, DtoE);
                 Task ampE = this.computer.RunAsync(this.getRawProgramInstructions(), DtoE, EtoA);
-
                 Task.WaitAll(ampA, ampB, ampC, ampD, ampE);
 
                 // sequence done, see if it's the highest signal
