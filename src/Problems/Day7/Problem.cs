@@ -24,7 +24,7 @@ namespace Advent2019.Problems.Day7
             this.stackInput = stackInput;
             this.lastOutput = lastOutput;
         }
-        
+
         private int readValue(string[] memory, string address, char mode)
         {
             if (mode == '1')
@@ -54,14 +54,13 @@ namespace Advent2019.Problems.Day7
                                 {
                                     yield return set;
                                 }
-
                             }
                         }
                     }
                 }
             }
         }
-        
+
         private IEnumerable<int[]> generatePhaseSequences2()
         {
             List<int[]> list = new List<int[]>();
@@ -81,7 +80,6 @@ namespace Advent2019.Problems.Day7
                                 {
                                     yield return set;
                                 }
-
                             }
                         }
                     }
@@ -99,7 +97,7 @@ namespace Advent2019.Problems.Day7
         {
             int maxSignal = 0;
             int[] code = new int[0];
-            
+
             foreach (int[] sequence in this.generatePhaseSequences())
             {
                 // Reset output between sequences
@@ -110,11 +108,11 @@ namespace Advent2019.Problems.Day7
                     this.stackInput.Reset();
                     this.stackInput.Push(this.lastOutput.GetLastOutput());
                     this.stackInput.Push(i1);
-                    
+
                     // run an isolated memory with the two inputs and an output layer that'll remember the last output
                     await this.computer.RunAsync(this.getRawProgramInstructions(), this.stackInput, this.lastOutput);
                 }
-                
+
                 // sequence done, see if it's the highest signal
                 if (this.lastOutput.GetLastOutput() > maxSignal)
                 {
@@ -126,10 +124,45 @@ namespace Advent2019.Problems.Day7
             Console.WriteLine($"MaxSignal: {maxSignal}");
         }
 
-
-        public Task RunPart2Async(CancellationToken cancellationToken)
+        public async Task RunPart2Async(CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            int maxSignal = 0;
+            int[] code = new int[0];
+
+            foreach (int[] sequence in this.generatePhaseSequences2())
+            {
+                // Reset output between sequences
+                ReadWriteBlocker EtoA = new ReadWriteBlocker();
+                await EtoA.WriteAsync(sequence[0]);
+                await EtoA.WriteAsync(0);
+                ReadWriteBlocker AtoB = new ReadWriteBlocker();
+                await AtoB.WriteAsync(sequence[1]);
+                ReadWriteBlocker BtoC = new ReadWriteBlocker();
+                await BtoC.WriteAsync(sequence[2]);
+                ReadWriteBlocker CtoD = new ReadWriteBlocker();
+                await CtoD.WriteAsync(sequence[3]);
+                ReadWriteBlocker DtoE = new ReadWriteBlocker();
+                await DtoE.WriteAsync(sequence[4]);
+
+                // run five copies...
+                Task ampA = this.computer.RunAsync(this.getRawProgramInstructions(), EtoA, AtoB);
+                Task ampB = this.computer.RunAsync(this.getRawProgramInstructions(), AtoB, BtoC);
+                Task ampC = this.computer.RunAsync(this.getRawProgramInstructions(), BtoC, CtoD);
+                Task ampD = this.computer.RunAsync(this.getRawProgramInstructions(), CtoD, DtoE);
+                Task ampE = this.computer.RunAsync(this.getRawProgramInstructions(), DtoE, EtoA);
+
+                Task.WaitAll(ampA, ampB, ampC, ampD, ampE);
+
+                // sequence done, see if it's the highest signal
+                int lastValue = await EtoA.GetNextAsync();
+                if (lastValue > maxSignal)
+                {
+                    code = sequence;
+                    maxSignal = lastValue;
+                }
+            }
+
+            Console.WriteLine($"MaxSignal: {maxSignal}");
         }
     }
 }
