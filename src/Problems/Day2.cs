@@ -23,7 +23,7 @@ namespace Advent2019.Problems
             this.computerInput = dummyInput;
             this.computerOutput = dummyOutput;
         }
-        public Task RunPart1Async(CancellationToken cancellationToken)
+        public async Task RunPart1Async(CancellationToken cancellationToken)
         {
             Console.WriteLine("Please enter program instructions (comma separated):");
             string input = Console.ReadLine();
@@ -34,16 +34,12 @@ namespace Advent2019.Problems
                 {2, 2}
             };
             
-            Memory memory = this.computer.Run(input, this.computerInput, this.computerOutput, overrides);
+            Memory memory = await this.computer.RunAsync(input, this.computerInput, this.computerOutput, overrides);
             
             Console.WriteLine(memory.GetAtAddress(0));
-            
-            
-            
-            return Task.CompletedTask;
         }
 
-        public Task RunPart2Async(CancellationToken cancellationToken)
+        public async Task RunPart2Async(CancellationToken cancellationToken)
         {
             Console.WriteLine("Please enter program instructions (comma separated):");
             string input = Console.ReadLine();
@@ -58,12 +54,12 @@ namespace Advent2019.Problems
                         {2, verb}
                     };
                     
-                    Memory memory = this.computer.Run(input, this.computerInput, this.computerOutput, overrides);
+                    Memory memory = await this.computer.RunAsync(input, this.computerInput, this.computerOutput, overrides);
 
                     if (memory.GetAtAddress(0) == 19690720)
                     {
                         Console.WriteLine($"Program Code: {100 * noun + verb}");
-                        return Task.CompletedTask;
+                        return;
                     }
                 }
             }

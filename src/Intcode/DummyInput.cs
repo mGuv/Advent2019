@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
+
 namespace Advent2019.Intcode
 {
     public class DummyInput : IInput
     {
-        public int GetNext()
+        public Task<int> GetNextAsync()
         {
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }

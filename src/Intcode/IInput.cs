@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Advent2019.Intcode
 {
     public interface IInput
     {
-        int GetNext();
+        Task<int> GetNextAsync();
     }
 }

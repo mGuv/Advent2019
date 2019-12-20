@@ -1,12 +1,13 @@
+using System.Threading.Tasks;
 using Advent2019.Intcode;
 
 namespace Advent2019.Problems.Day5
 {
     public class InputOne : IInput
     {
-        public int GetNext()
+        public Task<int> GetNextAsync()
         {
-            return 1;
+            return Task.FromResult(1);
         }
     }
 }

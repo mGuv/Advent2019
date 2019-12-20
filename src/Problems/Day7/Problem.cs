@@ -95,7 +95,7 @@ namespace Advent2019.Problems.Day7
                 "3,8,1001,8,10,8,105,1,0,0,21,42,67,84,109,126,207,288,369,450,99999,3,9,102,4,9,9,1001,9,4,9,102,2,9,9,101,2,9,9,4,9,99,3,9,1001,9,5,9,1002,9,5,9,1001,9,5,9,1002,9,5,9,101,5,9,9,4,9,99,3,9,101,5,9,9,1002,9,3,9,1001,9,2,9,4,9,99,3,9,1001,9,2,9,102,4,9,9,101,2,9,9,102,4,9,9,1001,9,2,9,4,9,99,3,9,102,2,9,9,101,5,9,9,1002,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,99,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,99,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,99";
         }
 
-        public Task RunPart1Async(CancellationToken cancellationToken)
+        public async Task RunPart1Async(CancellationToken cancellationToken)
         {
             int maxSignal = 0;
             int[] code = new int[0];
@@ -103,7 +103,7 @@ namespace Advent2019.Problems.Day7
             foreach (int[] sequence in this.generatePhaseSequences())
             {
                 // Reset output between sequences
-                this.lastOutput.Write(0);
+                await this.lastOutput.WriteAsync(0);
                 foreach (int i1 in sequence)
                 {
                     // build the two inputs it needs
@@ -112,7 +112,7 @@ namespace Advent2019.Problems.Day7
                     this.stackInput.Push(i1);
                     
                     // run an isolated memory with the two inputs and an output layer that'll remember the last output
-                    this.computer.Run(this.getRawProgramInstructions(), this.stackInput, this.lastOutput);
+                    await this.computer.RunAsync(this.getRawProgramInstructions(), this.stackInput, this.lastOutput);
                 }
                 
                 // sequence done, see if it's the highest signal
@@ -124,7 +124,6 @@ namespace Advent2019.Problems.Day7
             }
 
             Console.WriteLine($"MaxSignal: {maxSignal}");
-            return Task.CompletedTask;
         }
 
 

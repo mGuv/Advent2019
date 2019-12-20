@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Advent2019.Intcode;
 
 namespace Advent2019.Problems.Day5
@@ -6,9 +7,10 @@ namespace Advent2019.Problems.Day5
     {
         private int lastOutput;
         
-        public void Write(int value)
+        public Task WriteAsync(int value)
         {
             this.lastOutput = value;
+            return Task.CompletedTask;
         }
 
         public int GetLastOutput()

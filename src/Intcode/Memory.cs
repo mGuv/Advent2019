@@ -11,6 +11,11 @@ namespace Advent2019.Intcode
             this.data = data;
         }
 
+        public string ToRaw()
+        {
+            return string.Concat(data, ",");
+        }
+
         public int Length()
         {
             return this.data.Length;

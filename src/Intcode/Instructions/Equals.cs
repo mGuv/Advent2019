@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace Advent2019.Intcode.Instructions
 {
     public class Equals : IInstruction
     {
-        public int Run(Memory memory, int startingIndex, Command command, IInput input, IOutput output)
+        public Task<int> RunAsync(Memory memory, int startingIndex, Command command, IInput input, IOutput output)
         {
             int a = memory.Read(startingIndex + 1, command.GetParameterMode(1));
             int b = memory.Read(startingIndex + 2, command.GetParameterMode(2));
@@ -17,7 +19,7 @@ namespace Advent2019.Intcode.Instructions
                 memory.Write(address, 0);
             }
 
-            return startingIndex + 4;
+            return Task.FromResult(startingIndex + 4);
         }
     }
 }

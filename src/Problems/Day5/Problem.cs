@@ -28,27 +28,22 @@ namespace Advent2019.Problems.Day5
             this.part2Input = inputFive;
         }
         
-        public Task RunPart1Async(CancellationToken cancellationToken)
+        public async Task RunPart1Async(CancellationToken cancellationToken)
         {
             Console.WriteLine("Please enter program instructions (comma separated):");
             string input = Console.ReadLine();
-            this.computer.Run(input, this.part1Input, this.part1Output);
+            await this.computer.RunAsync(input, this.part1Input, this.part1Output);
             
             Console.WriteLine(this.part1Output.GetLastOutput());
-            
-            return Task.CompletedTask;
-
         }
 
-        public Task RunPart2Async(CancellationToken cancellationToken)
+        public async Task RunPart2Async(CancellationToken cancellationToken)
         {
             Console.WriteLine("Please enter program instructions (comma separated):");
             string input = Console.ReadLine();
-            this.computer.Run(input, this.part2Input, this.part2Output);
+            await this.computer.RunAsync(input, this.part2Input, this.part2Output);
             
             Console.WriteLine(this.part2Output.GetLastOutput());
-            
-            return Task.CompletedTask;
         }
     }
 }

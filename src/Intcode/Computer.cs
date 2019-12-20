@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Advent2019.Intcode.Instructions;
 
 namespace Advent2019.Intcode
@@ -29,7 +30,7 @@ namespace Advent2019.Intcode
             };
         }
 
-        public Memory Run(string program, IInput input, IOutput output, Dictionary<int, int> overrides = null)
+        public async Task<Memory> RunAsync(string program, IInput input, IOutput output, Dictionary<int, int> overrides = null)
         {
             Memory memory = this.memoryFactory.Create(program);
 
@@ -46,8 +47,8 @@ namespace Advent2019.Intcode
             while (currentIndex < memory.Length())
             {
                 Command nextCommand = new Command(memory.GetAtAddress(currentIndex));
-                currentIndex = this.instructions[nextCommand.GetIntCode()]
-                    .Run(memory, currentIndex, nextCommand, input, output);
+                currentIndex = await this.instructions[nextCommand.GetIntCode()]
+                    .RunAsync(memory, currentIndex, nextCommand, input, output);
             }
 
             return memory;
