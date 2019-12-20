@@ -4,9 +4,9 @@ namespace Advent2019.Intcode
 {
     public class DummyInput : IInput
     {
-        public Task<int> GetNextAsync()
+        public Task<long> GetNextAsync()
         {
-            return Task.FromResult(0);
+            return Task.FromResult((long)0);
         }
     }
 }

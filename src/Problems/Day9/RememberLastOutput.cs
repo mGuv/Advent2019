@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Advent2019.Intcode;
 
-namespace Advent2019.Problems.Day7
+namespace Advent2019.Problems.Day9
 {
     public class RememberLastOutput : IOutput
     {

@@ -28,7 +28,7 @@ namespace Advent2019.Problems
             Console.WriteLine("Please enter program instructions (comma separated):");
             string input = Console.ReadLine();
 
-            Dictionary<int, int> overrides = new Dictionary<int, int>()
+            Dictionary<long, long> overrides = new Dictionary<long, long>()
             {
                 {1, 12},
                 {2, 2}
@@ -44,11 +44,11 @@ namespace Advent2019.Problems
             Console.WriteLine("Please enter program instructions (comma separated):");
             string input = Console.ReadLine();
 
-            for (int noun = 0; noun <= 99; noun++)
+            for (long noun = 0; noun <= 99; noun++)
             {
-                for (int verb = 0; verb <= 99; verb++)
+                for (long verb = 0; verb <= 99; verb++)
                 {
-                    Dictionary<int, int> overrides = new Dictionary<int, int>()
+                    Dictionary<long, long> overrides = new Dictionary<long, long>()
                     {
                         {1, noun},
                         {2, verb}

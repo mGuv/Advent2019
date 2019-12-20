@@ -95,7 +95,7 @@ namespace Advent2019.Problems.Day7
 
         public async Task RunPart1Async(CancellationToken cancellationToken)
         {
-            int maxSignal = 0;
+            long maxSignal = 0;
             int[] code = new int[0];
 
             foreach (int[] sequence in this.generatePhaseSequences())
@@ -126,7 +126,7 @@ namespace Advent2019.Problems.Day7
 
         public async Task RunPart2Async(CancellationToken cancellationToken)
         {
-            int maxSignal = 0;
+            long maxSignal = 0;
             int[] code = new int[0];
 
             foreach (int[] sequence in this.generatePhaseSequences2())
@@ -153,7 +153,7 @@ namespace Advent2019.Problems.Day7
                 Task.WaitAll(ampA, ampB, ampC, ampD, ampE);
 
                 // sequence done, see if it's the highest signal
-                int lastValue = await EtoA.GetNextAsync();
+                long lastValue = await EtoA.GetNextAsync();
                 if (lastValue > maxSignal)
                 {
                     code = sequence;

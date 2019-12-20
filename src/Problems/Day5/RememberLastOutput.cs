@@ -5,15 +5,15 @@ namespace Advent2019.Problems.Day5
 {
     public class RememberLastOutput : IOutput
     {
-        private int lastOutput;
+        private long lastOutput;
         
-        public Task WriteAsync(int value)
+        public Task WriteAsync(long value)
         {
             this.lastOutput = value;
             return Task.CompletedTask;
         }
 
-        public int GetLastOutput()
+        public long GetLastOutput()
         {
             return this.lastOutput;
         }

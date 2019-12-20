@@ -5,9 +5,9 @@ namespace Advent2019.Problems.Day5
 {
     public class InputOne : IInput
     {
-        public Task<int> GetNextAsync()
+        public Task<long> GetNextAsync()
         {
-            return Task.FromResult(1);
+            return Task.FromResult((long)1);
         }
     }
 }

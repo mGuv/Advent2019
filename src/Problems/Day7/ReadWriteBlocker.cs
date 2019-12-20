@@ -7,21 +7,21 @@ namespace Advent2019.Problems.Day7
 {
     public class ReadWriteBlocker : IInput, IOutput
     {
-        private Queue<int> values;
+        private Queue<long> values;
         private SemaphoreSlim gate;
 
         public ReadWriteBlocker()
         {
-            this.values = new Queue<int>();
+            this.values = new Queue<long>();
             this.gate = new SemaphoreSlim(0);
         }
-        public async Task<int> GetNextAsync()
+        public async Task<long> GetNextAsync()
         {
             await this.gate.WaitAsync();
             return this.values.Dequeue();
         }
 
-        public Task WriteAsync(int value)
+        public Task WriteAsync(long value)
         {
             this.values.Enqueue(value);
             this.gate.Release();

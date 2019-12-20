@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Advent2019.Intcode
 {
     public class MemoryFactory
@@ -5,11 +7,11 @@ namespace Advent2019.Intcode
         public Memory Create(string raw)
         {
             string[] parts = raw.Split(",");
-            int[] parsed = new int[parts.Length];
+            Dictionary<long, long> parsed = new Dictionary<long, long>();
 
-            for (int i = 0; i < parts.Length; i++)
+            for (long i = 0; i < parts.Length; i++)
             {
-                parsed[i] = int.Parse(parts[i]);
+                parsed.Add(i, long.Parse(parts[i]));
             }
             
             return new Memory(parsed);

@@ -12,7 +12,7 @@ namespace Advent2019.Intcode
 
         public Computer(MemoryFactory memoryFactory, Add addInstruction, Multiply multiplyInstruction,
             Terminate terminateInstruction, WriteInput writeInstruction, WriteOutput outputInstruction,
-            JumpIfTrue jumpIfTrueInstruction, JumpIfFalse jumpIfFalseInstruction, LessThan lessThanInstruction, Equals equalsInstruction)
+            JumpIfTrue jumpIfTrueInstruction, JumpIfFalse jumpIfFalseInstruction, LessThan lessThanInstruction, Equals equalsInstruction, AdjustRelativeBase adjustRelativeBase)
         {
             this.memoryFactory = memoryFactory;
 
@@ -26,25 +26,26 @@ namespace Advent2019.Intcode
                 {6, jumpIfFalseInstruction},
                 {7,lessThanInstruction},
                 {8, equalsInstruction},
+                {9, adjustRelativeBase},
                 {99, terminateInstruction}
             };
         }
 
-        public async Task<Memory> RunAsync(string program, IInput input, IOutput output, Dictionary<int, int> overrides = null)
+        public async Task<Memory> RunAsync(string program, IInput input, IOutput output, Dictionary<long, long> overrides = null)
         {
             Memory memory = this.memoryFactory.Create(program);
 
             if (overrides != null)
             {
-                foreach (KeyValuePair<int, int> keyValuePair in overrides)
+                foreach (KeyValuePair<long, long> keyValuePair in overrides)
                 {
                     memory.Write(keyValuePair.Key, keyValuePair.Value);
                 }
             }
 
-            int currentIndex = 0;
+            long currentIndex = 0;
 
-            while (currentIndex < memory.Length())
+            while (!memory.Terminated)
             {
                 Command nextCommand = new Command(memory.GetAtAddress(currentIndex));
                 currentIndex = await this.instructions[nextCommand.GetIntCode()]

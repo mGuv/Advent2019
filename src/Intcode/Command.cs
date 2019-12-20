@@ -6,7 +6,7 @@ namespace Advent2019.Intcode
     {
         private readonly char[] characters = new Char[5];
 
-        public Command(int raw)
+        public Command(long raw)
         {
             string converted = raw.ToString();
             while (converted.Length < 5)

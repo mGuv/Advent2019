@@ -6,14 +6,14 @@ namespace Advent2019.Problems.Day7
 {
     public class StackInput : IInput
     {
-        private Stack<int> inputs = new Stack<int>();
+        private Stack<long> inputs = new Stack<long>();
 
-        public Task<int> GetNextAsync()
+        public Task<long> GetNextAsync()
         {
             return Task.FromResult(inputs.Pop());
         }
 
-        public void Push(int value)
+        public void Push(long value)
         {
             this.inputs.Push(value);
         }

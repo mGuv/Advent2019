@@ -4,7 +4,7 @@ namespace Advent2019.Intcode
 {
     public class DummyOutput : IOutput
     {
-        public Task WriteAsync(int value)
+        public Task WriteAsync(long value)
         {
             return Task.CompletedTask;
         }
